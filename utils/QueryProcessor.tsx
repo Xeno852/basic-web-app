@@ -26,7 +26,8 @@ export default function QueryProcessor(query: string): string {
     return numbers ? Math.pow(numbers[0], numbers[1]).toString() : "";
   } else if (query.includes("square") && query.includes("cube")) {
     let numbers = query.split(":")[1].split(",").map(Number);
-    return numbers.find(number => Math.sqrt(number) % 1 === 0 && Math.cbrt(number) % 1 === 0).toString();
+    let result = numbers.find(number => Math.sqrt(number) % 1 === 0 && Math.cbrt(number) % 1 === 0);
+    return result !== undefined ? result.toString() : "";
   }
   return "";
 }
