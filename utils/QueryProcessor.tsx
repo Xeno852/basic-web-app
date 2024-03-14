@@ -33,6 +33,21 @@ export default function QueryProcessor(query: string): string {
     }
     return largest.toString();
   }
+  // make a condition to respond to this "Which of the following numbers are primes: 65, 83, 31, 48, 13?" with just the correct number:
+  else if (query.includes("primes")) {
+    let numbers = query.split(":")[1].split(",");
+    for (let i = 0; i < numbers.length; i++) {
+      let isPrime = true;
+      for (let j = 2; j < parseInt(numbers[i]); j++) {
+        if (parseInt(numbers[i]) % j === 0) {
+          isPrime = false;
+        }
+      }
+      if (isPrime) {
+        return numbers[i];
+      }
+    }
+  }
   // make a condition to solve this and return it What is 4 to the power of 85?
   else if (query.includes("power of")) {
     let numbers = query.split("to the power of")[1].split(" ");
