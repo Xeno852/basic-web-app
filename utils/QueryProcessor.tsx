@@ -29,5 +29,14 @@ export default function QueryProcessor(query: string): string {
     }
     return largest.toString();
   }
+  // make a condition to 	solve this and return it: Which of the following numbers is both a square and a cube: 784, 2502, 27, 1, 484, 4931, 2900?
+  else if (query.includes("square") && query.includes("cube")) {
+    let numbers = query.split(":")[1].split(",");
+    for (let i = 0; i < numbers.length; i++) {
+      if (Math.sqrt(parseInt(numbers[i])) % 1 === 0 && Math.cbrt(parseInt(numbers[i])) % 1 === 0) {
+        return numbers[i];
+      }
+    }
+  }
   return "";
 }
