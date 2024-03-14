@@ -17,5 +17,17 @@ export default function QueryProcessor(query: string): string {
       (parseInt(query.split("plus")[0]) + parseInt(query.split("plus")[1])).toString()
     )
   }
+  
+  // make a condition to find the largest number if this query is found "	Which of the following numbers is the largest: 13, 63, 61?"
+  else if (query.includes("largest")) {
+    let numbers = query.split(":")[1].split(",");
+    let largest = 0;
+    for (let i = 0; i < numbers.length; i++) {
+      if (parseInt(numbers[i]) > largest) {
+        largest = parseInt(numbers[i]);
+      }
+    }
+    return largest.toString();
+  }
   return "";
 }
