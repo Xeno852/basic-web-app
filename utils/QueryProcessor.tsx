@@ -33,6 +33,11 @@ export default function QueryProcessor(query: string): string {
     }
     return largest.toString();
   }
+  // make a condition to solve this and return it What is 4 to the power of 85?
+  else if (query.includes("power of")) {
+    let numbers = query.split("to the power of")[1].split(" ");
+    return Math.pow(parseInt(numbers[1]), parseInt(numbers[2])).toString();
+  }
   // make a condition to 	solve this and return it: Which of the following numbers is both a square and a cube: 784, 2502, 27, 1, 484, 4931, 2900?
   else if (query.includes("square") && query.includes("cube")) {
     let numbers = query.split(":")[1].split(",");
