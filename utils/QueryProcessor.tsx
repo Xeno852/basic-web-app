@@ -11,5 +11,9 @@ export default function QueryProcessor(query: string): string {
       "Luke Blackwell"
     );
   }
-  return "";
+  else if (query.includes("plus")) {
+    return(
+      // Should come as a query like "What is X plus Y?"" parse in the numbers that are in the X and Y places and add them and return
+      (parseInt(query.split("plus")[0]) + parseInt(query.split("plus")[1]))
+    )
 }
