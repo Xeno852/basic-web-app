@@ -11,15 +11,17 @@ export default function QueryProcessor(query: string): string {
       "Luke Blackwell"
     );
   }
+  // make a condition to find the sum of the numbers if this query is found "what is 5 plus 18"
   else if (query.includes("plus")) {
-    const numbers = query.split("plus");
-    const x = parseInt(numbers[0]);
-    const y = parseInt(numbers[1]);
-    if (!isNaN(x) && !isNaN(y)) {
-      return (x + y).toString();
-    }
+    let numbers = query.split("plus")[1].split(" ");
+    return (parseInt(numbers[1]) + parseInt(numbers[2])).toString();
   }
-  
+  // make a condition to find the difference of the numbers if this query is found What is 33 multiplied by 8?""
+  else if (query.includes("multiplied")) {
+    let numbers = query.split("multiplied by")[1].split(" ");
+    return (parseInt(numbers[1]) * parseInt(numbers[2])).toString();
+  }
+
   // make a condition to find the largest number if this query is found "	Which of the following numbers is the largest: 13, 63, 61?"
   else if (query.includes("largest")) {
     let numbers = query.split(":")[1].split(",");
