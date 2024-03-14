@@ -12,10 +12,12 @@ export default function QueryProcessor(query: string): string {
     );
   }
   else if (query.includes("plus")) {
-    return(
-      // Should come as a query like "What is X plus Y?"" parse in the numbers that are in the X and Y places and add them and return
-      (parseInt(query.split("plus")[0]) + parseInt(query.split("plus")[1])).toString()
-    )
+    const numbers = query.split("plus");
+    const x = parseInt(numbers[0]);
+    const y = parseInt(numbers[1]);
+    if (!isNaN(x) && !isNaN(y)) {
+      return (x + y).toString();
+    }
   }
   
   // make a condition to find the largest number if this query is found "	Which of the following numbers is the largest: 13, 63, 61?"
