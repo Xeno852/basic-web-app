@@ -1,66 +1,38 @@
 export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("shakespeare")) {
-    return (
-      "William Shakespeare (26 April 1564 - 23 April 1616) was an " +
-      "English poet, playwright, and actor, widely regarded as the greatest " +
-      "writer in the English language and the world's pre-eminent dramatist."
-    );
-  }
-  else if (query.includes("name?")) {
-    return (
-      "Luke Blackwell"
-    );
-  }
-  // make a condition to find the sum of the numbers if this query is found "what is 5 plus 18"
-  else if (query.includes("plus")) {
-    let numbers = query.split("plus")[1].split(" ");
-    return (parseInt(numbers[1]) + parseInt(numbers[2])).toString();
-  }
-  // make a condition to find the difference of the numbers if this query is found What is 33 multiplied by 8?""
-  else if (query.includes("multiplied")) {
-    let numbers = query.split("multiplied by")[1].split(" ");
-    return (parseInt(numbers[1]) * parseInt(numbers[2])).toString();
-  }
-
-  // make a condition to find the largest number if this query is found "	Which of the following numbers is the largest: 13, 63, 61?"
-  else if (query.includes("largest")) {
-    let numbers = query.split(":")[1].split(",");
-    let largest = 0;
-    for (let i = 0; i < numbers.length; i++) {
-      if (parseInt(numbers[i]) > largest) {
-        largest = parseInt(numbers[i]);
-      }
-    }
+    return "William Shakespeare (26 April 1564 - 23 April 1616) was an English poet, playwright, and actor, widely regarded as the greatest writer in the English language and the world's pre-eminent dramatist.";
+  } else if (query.includes("name?")) {
+    return "Luke Blackwell";
+  } else if (query.includes("plus")) {
+    const numbers = query.match(/\d+/g)?.map(Number);
+    const sum = numbers ? numbers.reduce((acc, curr) => acc + curr, 0) : 0;
+    return sum.toString();
+  } else if (query.includes("minus")) {
+    const numbers = query.match(/\d+/g)?.map(Number);
+    const difference = numbers ? numbers.reduce((acc, curr) => acc - curr) : 0; // Assuming first number - second number for subtraction
+    return difference.toString();
+  } else if (query.includes("multiplied by")) {
+    let numbers = query.split("multiplied by").map(part => parseInt(part.match(/\d+/)?.[0] || "0"));
+    return (numbers[0] * numbers[1]).toString();
+  } else if (query.includes("largest")) {
+    let numbers = query.split(":")[1].split(",").map(Number);
+    let largest = Math.max(...numbers);
     return largest.toString();
-  }
-  // make a condition to respond to this "Which of the following numbers are primes: 65, 83, 31, 48, 13?" with just the correct number:
-  else if (query.includes("primes")) {
-    let numbers = query.split(":")[1].split(",");
-    for (let i = 0; i < numbers.length; i++) {
-      let isPrime = true;
-      for (let j = 2; j < parseInt(numbers[i]); j++) {
-        if (parseInt(numbers[i]) % j === 0) {
-          isPrime = false;
-        }
-      }
-      if (isPrime) {
-        return numbers[i];
-      }
-    }
-  }
-  // make a condition to solve this and return it What is 4 to the power of 85?
-  else if (query.includes("power of")) {
-    let numbers = query.split("to the power of")[1].split(" ");
-    return Math.pow(parseInt(numbers[1]), parseInt(numbers[2])).toString();
-  }
-  // make a condition to 	solve this and return it: Which of the following numbers is both a square and a cube: 784, 2502, 27, 1, 484, 4931, 2900?
-  else if (query.includes("square") && query.includes("cube")) {
-    let numbers = query.split(":")[1].split(",");
-    for (let i = 0; i < numbers.length; i++) {
-      if (Math.sqrt(parseInt(numbers[i])) % 1 === 0 && Math.cbrt(parseInt(numbers[i])) % 1 === 0) {
-        return numbers[i];
-      }
-    }
+  } else if (query.includes("primes")) {
+    let numbers = query.split(":")[1].split(",").map(Number);
+    return numbers.filter(isPrime).toString(); // Assuming you have an isPrime function defined elsewhere
+  } else if (query.includes("power of")) {
+    let numbers = query.match(/\d+/g)?.map(Number);
+    return numbers ? Math.pow(numbers[0], numbers[1]).toString() : "";
+  } else if (query.includes("square") && query.includes("cube")) {
+    let numbers = query.split(":")[1].split(",").map(Number);
+    return numbers.find(number => Math.sqrt(number) % 1 === 0 && Math.cbrt(number) % 1 === 0).toString();
   }
   return "";
+}
+
+function isPrime(num: number): boolean {
+  for (let i = 2, s = Math.sqrt(num); i <= s; i++)
+    if (num % i === 0) return false;
+  return num > 1;
 }
